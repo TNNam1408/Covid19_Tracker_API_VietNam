@@ -28,78 +28,97 @@ class Search extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    return FutureBuilder<List<Detail>>(
-        future: _userList.getList(query: query),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          List<Detail>? data = snapshot.data;
-          return ListView.builder(
-              itemCount: data?.length,
-              itemBuilder: (context, index) {
-                if (!snapshot.hasData) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-                return Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ListTile(
-                      title: Row(
-                        children: [
-                          const SizedBox(width: 20),
-                          Column(
-                              crossAxisAlignment:
-                              CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  data![index].name.toString(),
-                                  style: const TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black),
-                                ),
-                                Text(
-                                  '${data[index].cases}',
-                                  style: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                                const SizedBox(height: 10),
-                                Text(
-                                  '${data[index].death}',
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                                const SizedBox(height: 10),
-                                Text(
-                                  '${data[index].casesToday}',
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                              ])
-                        ],
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            const Color(0xFF4A3298).withOpacity(0.8),
+            const Color(0xFFFF7643).withOpacity(0.8),
+          ],
+        ),
+      ),
+      padding: const EdgeInsets.all(10),
+      child: FutureBuilder<List<Detail>>(
+          future: _userList.getList(query: query),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            List<Detail>? data = snapshot.data;
+            return ListView.builder(
+                itemCount: data?.length,
+                itemBuilder: (context, index) {
+                  if (!snapshot.hasData) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  return Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ListTile(
+                        title:  Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              data![index].name.toString(),
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                            Text(
+                              '${data[index].cases}',
+                              style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                            Text(
+                              '+${data[index].casesToday}',
+                              style: const TextStyle(
+                                color: Colors.red,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            Text(
+                              '${data[index].death}',
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ],
+                        ),
+                        // trailing: Text('More Info'),
                       ),
-                      // trailing: Text('More Info'),
                     ),
-                  ),
-                );
-              });
-        });
+                  );
+                });
+          }),
+    );
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return const Center(
-      child: Text('Search User'),
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            const Color(0xFF4A3298).withOpacity(0.8),
+            const Color(0xFFFF7643).withOpacity(0.8),
+          ],
+        ),
+      ),
+      child: const Center(
+        child: Text('Search User'),
+      ),
     );
   }
 }
